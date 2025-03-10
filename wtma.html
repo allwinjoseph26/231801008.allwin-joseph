@@ -1,0 +1,309 @@
+Certainly! Below is the revised version of your `index.html` with a fresh set of styling, keeping all the same functionalities intact.
+
+### `index.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form with Validation</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle, rgba(0, 145, 255, 0.8), rgba(63, 94, 251, 0.7));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 850px;
+            padding: 40px;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            font-size: 30px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+
+        .row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #34495e;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 6px rgba(52, 152, 219, 0.4);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #95a5a6;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Radio button Styles */
+        .gender-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-container input {
+            display: none;
+        }
+
+        .radio-container .radio-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ecf0f1;
+            border-radius: 50%;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        .radio-container input:checked + .radio-mark {
+            border-color: #3498db;
+        }
+
+        .radio-container input:checked + .radio-mark::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background-color: #3498db;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Button Styles */
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+        }
+
+        .data-table {
+            margin-top: 40px;
+            display: none;
+            animation: slideUp 0.6s ease-in-out;
+        }
+
+        .data-table h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            position: relative;
+            font-size: 24px;
+        }
+
+        .data-table h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #34495e;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f5f7fa;
+        }
+
+        tbody tr:hover {
+            background-color: #ecf0f1;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .gender-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Signup Form</h1>
+        <form id="signupForm">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name">
+                        <div id="firstNameError" class="error"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name">
+                        <div id="lastNameError" class="error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="yourname@example.com">
+                <div id="emailError" class="error"></div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" name="dob">
+                        <div id="dobError" class="error"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age">
+                        <div id="ageError" class="error"></div>
+                    </div>
+                </div>
+            </
